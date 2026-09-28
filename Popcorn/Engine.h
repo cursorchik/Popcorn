@@ -5,5 +5,18 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-void Init();
-void Draw_Frame(HDC hdc);
+enum EKey_Type
+{
+    EKT_Left,
+    EKT_Right,
+    EKT_Space,
+};
+
+const int Timer_ID = WM_USER + 1;
+const int Timer_Elapse = 30;
+
+void Init_Engine(HWND hwnd);
+void Draw_Frame(HDC hdc, RECT& paint_area);
+
+int On_Key_Down(EKey_Type key_type);
+int On_Timer();
