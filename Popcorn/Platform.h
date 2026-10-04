@@ -10,7 +10,7 @@ class AsPlatform
 
     void Init();
     void Redraw(HWND hwnd);
-    void Draw(HDC hdc, HPEN BG_Pen, HBRUSH BG_Brush, RECT &paint_area);
+    void Draw(HDC hdc, RECT &paint_area);
 
     int X_Pos;
     int Width;

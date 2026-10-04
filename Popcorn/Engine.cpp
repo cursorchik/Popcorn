@@ -1,7 +1,7 @@
 #include "Engine.h"
 
 AsEngine::AsEngine()
-: Hwnd(0), BG_Pen(0), BG_Brush(0)
+: Hwnd(0)
 {
 }
 
@@ -10,7 +10,7 @@ void AsEngine::Init_Engine(HWND hwnd)
 
     Hwnd = hwnd;
 
-    AsConfig::Create_Pen_Brush(15, 63, 31, BG_Pen, BG_Brush);    
+	AActive_Brick::Setup_Colors();
 
     Ball.Init();
     Level.Init();
@@ -25,9 +25,9 @@ void AsEngine::Init_Engine(HWND hwnd)
 void AsEngine::Draw_Frame(HDC hdc, RECT& paint_area)
 {// Отрисовка экрана игры
 
-    Level.Draw(hdc, paint_area);
+    Level.Draw(Hwnd, hdc, paint_area);
 
-    Platform.Draw(hdc, BG_Pen, BG_Brush, paint_area);
+    Platform.Draw(hdc, paint_area);
 
 
     //int i = 0;
@@ -37,9 +37,9 @@ void AsEngine::Draw_Frame(HDC hdc, RECT& paint_area)
     //    Draw_Brick_Letter(hdc, 20 + i * Cell_Width * Global_Scale, 200, EBT_Red, ELT_O, i);
     //}
 
-    Ball.Draw(hdc, paint_area, BG_Pen, BG_Brush);
+    Ball.Draw(hdc, paint_area);
 
-    Border.Draw(hdc, paint_area, BG_Pen, BG_Brush);
+    Border.Draw(hdc, paint_area);
 }
 
 int AsEngine::On_Key_Down(EKey_Type key_type)
@@ -74,6 +74,8 @@ int AsEngine::On_Key_Down(EKey_Type key_type)
 int AsEngine::On_Timer()
 {
     Ball.Move(Hwnd, &Level, Platform.X_Pos, Platform.Width);
+
+	Level.Active_Brick.Act(Hwnd);
 
     return 0;
 }
